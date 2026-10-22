@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: devops-monitoring-lab
+  namespace: monitoring-lab
+  labels:
+    app: devops-monitoring-lab
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: devops-monitoring-lab
+
+  template:
+    metadata:
+      labels:
+        app: devops-monitoring-lab
+
+    spec:
+      containers:
+        - name: devops-monitoring-lab
+          image: devops-monitoring-lab:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80

@@ -1,0 +1,32 @@
+
+alloy:
+  configMap:
+    create: true
+    content: |
+      logging {
+        level  = "info"
+        format = "logfmt"
+      }
+
+      discovery.kubernetes "pods" {
+        role = "pod"
+
+        namespaces {
+          names = ["monitoring-lab"]
+        }
+      }
+
+      loki.source.kubernetes "pods" {
+        targets    = discovery.kubernetes.pods.targets
+        forward_to = [loki.write.endpoint.receiver]
+      }
+
+      loki.write "endpoint" {
+        endpoint {
+          url       = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
+          tenant_id = "1"
+        }
+      }
+
+rbac:
+  create: true
