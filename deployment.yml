@@ -23,6 +23,5 @@ spec:
       containers:
         - name: devops-monitoring-lab
           image: devops-monitoring-lab:1.0
-          imagePullPolicy: Never
           ports:
             - containerPort: 80
